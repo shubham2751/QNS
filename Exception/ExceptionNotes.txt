@@ -1,0 +1,16 @@
+Exception Generate
+	throw new Exception("MESSAGE");
+	
+Exception Handle
+Can be Handle in Two Ways
+
+1. function frame apni Exception ko Previous function frame ko send karta h
+	--> This can be done with using "throws Exception"
+	
+2. wohi be Exception resolve ho jae (Finish) 
+	--> This can be done with using "try and catch"
+	
+Note : When Exception is occurred below codes are NOT executed
+
+throw -> Exception Generate karne me kam aata h
+throws -> Exception Handle karne ka tarika h 

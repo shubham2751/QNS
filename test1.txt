@@ -1,0 +1,226 @@
+Problem
+Shortest Palindrome
+Given a string s, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+
+Input Format
+Take input String s
+
+Constraints
+length of String <10000
+
+Output Format
+print the shortest palindrome string
+
+Sample Input
+aacecaaa
+Sample Output
+aaacecaaa
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        while (true)
+        {
+            char ch[] = s.toCharArray();
+            int i = Rev(ch);
+        
+            if (i != -1)
+            {
+                s = ch[i] + s;
+            }
+        
+            if (R1(ch) == true)
+            {
+
+            System.out.println(s);
+            break;
+            
+            }
+        }
+    }
+
+    public static int Rev(char ch[])
+	{
+	    int s = 0;
+	    int e = ch.length-1;
+	    
+	    while (s < e)
+	    {
+	        if (ch[s] != ch[e])
+	            return e;
+	        s+=1;
+	        e-=1;
+	    }
+	    return -1;
+	}
+	
+	public static boolean R1(char ch[])
+	{
+	    int s = 0;
+	    int e = ch.length-1;
+	    
+	    while (s < e)
+	    {
+	        if (ch[s] != ch[e])
+	            return false;
+	        s+=1;
+	        e-=1;
+	    }
+	    return true;
+	}
+}
+
+Problem
+Sunny Buildings
+
+
+The heights of certain Buildings which lie adjacent to each other are given. Light starts falling from left side of the buildings. If there is a building of certain Height, all the buildings to the right side of it having lesser heights cannot see the sun . The task is to find the total number of such buildings that receive light.
+
+Input Format
+First line contains the Number of Testcases T.
+Next line contains the totalnumber of buildings
+Next line contains the height of n buildings.
+
+Constraints
+1<=T<=100 1<=N<=100 1<=Hi<=100
+
+Output Format
+Print total Number of buildings that receive Light.
+
+Sample Input
+1
+5
+7 4 8 2 9
+Sample Output
+3
+Explanation
+7 is the first element, it can see the sunset.
+4 can't see the sunset as 7 is hiding it.
+8 can see.
+2 can't see the sunset.
+9 also can see the sunset.
+
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+            int n = sc.nextInt();
+            int arr[] = new int[n];
+            for (int i = 0 ; i < n; i++)
+                arr[i] = sc.nextInt();
+
+            int p[] = new int[n];
+            p[0] = arr[0];
+
+            for(int i = 1; i < arr.length; i++)
+            {
+                if (arr[i] > p[i-1])
+                {
+                    p[i] = arr[i];
+                }
+                else
+                {
+                    p[i] = p[i-1];
+                }
+                // System.out.println(Arrays.toString(p));
+            }
+
+            int c = 0;
+
+            for (int i = 0; i < arr.length; i++)
+            {
+                if (arr[i] >= p[i])
+                    c+=1;
+            }
+
+            System.out.println(c);
+
+
+            t-=1;
+        }
+        
+
+    }
+}
+
+
+Problem
+Count Game
+
+Pratik was given an array of integers arr of n elements and an integer k that could be considered as the threshold to divide each element of the array into the sum of different numbers.For example: if k=3, 5 can be represented as (3+2) , 13 can be represented as (3+3+3+3+1) . Pratik has to find the sum of count of the numbers in which array elements can be divided.
+
+Input Format
+First line of input contains integers n and k denoting length of the array and threshold value to divide the elements of the array. Next n lines contain the elements of the array.
+
+Constraints
+1<=n<=10^7
+0<=arr[i]<=10^7
+1<=k<=10^7
+
+Output Format
+An integer representing total count.
+
+Sample Input
+4 3
+5 8 10 13
+Sample Output
+14
+Explanation
+Each number can be expressed as sum of different numbers less than or equal to K as 5 (3 + 2), 8 (3 + 3 + 2), 10 (3 + 3 + 3 + 1), 13 (3 + 3 + 3 + 3 + 1). So, the sum of count of each element is (2+3+4+5)=14.
+
+
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+
+        int arr[] = new int[n];
+
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.nextInt();
+
+        int sum = 0;
+
+        for (int i = 0; i < arr.length; i++)
+        {
+            int num = arr[i];
+            int count = 0;
+
+            while (num > 0)
+            {
+
+                // System.out.println(num);
+                if (num-k > 0)
+                {
+                    num -= k;
+                    // System.out.println(num + "after");
+                    count+=1;
+                }
+                else
+                {
+                    num = 0;
+                    count +=1;
+                }
+                
+            }
+            sum += count;
+        }
+
+        System.out.println(sum);
+    }
+}

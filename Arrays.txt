@@ -1,0 +1,3533 @@
+Strings-String Compression
+
+Take as input S, a string. Write a function that does basic string compression. Print the value returned. E.g. for input “aaabbccds” print out a3b2c2ds.
+
+Input Format
+A single String S.
+
+Constraints
+A string of length between 1 to 1000
+
+Output Format
+The compressed String.
+
+Sample Input
+aaabbccds
+Sample Output
+a3b2c2ds
+Explanation
+In the given sample test case 'a' is repeated 3 times consecutively, 'b' is repeated twice, 'c' is repeated twice. But, 'd' and 's' occurred only once that's why we do not write their occurrence.
+
+CODE:
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.next();
+
+        System.out.println(Comp(s));
+
+    }
+
+    public static String Comp(String s)
+    {
+        String ns = "";
+
+        char prev = s.charAt(0);
+
+        int count = 1;
+
+        int i = 1;
+
+        for (; i < s.length(); i++)
+        {
+            if (s.charAt(i) == prev)
+                count+=1;
+            else
+            {
+                if (count > 1)
+                {
+                    ns += prev + Integer.toString(count);
+                    prev = s.charAt(i);
+                    count = 1;
+                }
+                else
+                {
+                    ns += prev;
+                    prev = s.charAt(i);
+                    count = 1;
+                }
+                    
+            }
+
+
+            if (i == s.length()-1)
+            {
+                if (count > 1)
+                {
+                    ns += prev + Integer.toString(count);
+                }
+                else
+                {
+                    ns += prev;
+                }
+            }
+            
+        }
+
+        return ns;
+    }
+}
+
+
+// Solution Code CB
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+        String s = "aaabbccdsse";
+        
+        StringBuilder sb = new StringBuilder();
+        
+        int cnt = 0;
+        
+        for (int i = 0; i <= s.length()-1 ; i++)
+        {
+            if (i < s.length()-1 && s.charAt(i) == s.charAt(i+1))
+                cnt++;
+            else
+            {
+                sb.append(s.charAt(i));
+                
+                if (cnt + 1 > 1)
+                    sb.append(cnt+1);
+                cnt = 0;
+            }
+        }
+        
+        System.out.println(sb);
+        
+	}
+}
+
+
+
+Strings-Difference in Ascii Codes
+
+Take as input S, a string. Write a program that inserts between each pair of characters the difference between their ascii codes and print the ans.
+
+Input Format
+String
+
+Constraints
+Length of String should be between 2 to 1000.
+
+Output Format
+String
+
+Sample Input
+acb
+Sample Output
+a2c-1b
+Explanation
+For the sample case, the Ascii code of a=97 and c=99 ,the difference between c and a is 2.Similarly ,the Ascii code of b=98 and c=99 and their difference is -1. So the ans is a2c-1b.
+
+CODE :
+
+// My Solution
+
+public class Main {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        StringBuilder sb = new StringBuilder();
+        
+        for (int i = 0; i < s.length()-1 ; i++)
+        {
+            int first = s.charAt(i);
+            int second = s.charAt(i+1);
+            
+            sb.append((char)first);
+            sb.append(second - first);
+        }
+        sb.append(s.charAt(s.length()-1));
+        System.out.println(sb);
+    }
+}
+
+// Solution Code CB
+
+public static String diff_ascii(String str){
+
+      String ans = "";
+
+      for(int i = 0;i < str.length() - 1;i++){
+
+          ans += str.charAt(i);
+          int diff = str.charAt(i + 1) - str.charAt(i);
+          ans += diff;
+          // ans += str.charAt(i + 1);
+      }
+
+      ans += str.charAt(str.length() - 1);
+
+      return ans;
+  }
+
+
+String Sort
+
+Nishant is a very naughty boy in Launchpad Batch. One day he was playing with strings, and randomly shuffled them all. Your task is to help Nishant Sort all the strings ( lexicographically ) but if a string is present completely as a prefix in another string, then string with longer length should come first. Eg bat, batman are 2 strings and the string bat is present as a prefix in Batman - then sorted order should have - Batman, bat.
+
+Input Format
+N(integer) followed by N strings.
+
+Constraints
+N<=1000
+
+Output Format
+N lines each containing one string.
+
+Sample Input
+3
+bat
+apple
+batman
+Sample Output
+apple
+batman
+bat
+Explanation
+In mathematics, the lexicographic or lexicographical order (also known as lexical order, dictionary order, alphabetical order or lexicographic(al) product) is a generalization of the way words are alphabetically ordered based on the alphabetical order of their component letters.
+
+
+// Solution Code CB
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+        String arr[] = {"bat", "batman", "apple"}; //apple batman bat
+        
+        int n = arr.length;
+        
+        sortfunc(arr, n);
+        
+        for (String e : arr)
+            System.out.print(e + " ");
+        
+	}
+	
+	public static void sortfunc(String arr[], int n)
+	{
+	    for (int i = 0; i < n; i++)
+	    {
+	        for (int j = 0; j < n-i-1; j++)
+	        {
+	            if (compareTo(arr[j], arr[j+1]) > 0)
+	            {
+    	            String temp = arr[j];
+    	            arr[j] = arr[j+1];
+    	            arr[j+1] = temp;
+	            }
+	        }
+	        
+	    }
+	}
+	
+	public static int compareTo(String s1, String s2)
+	{
+	    int i = 0;
+	    
+	    while (i < s1.length() && i < s2.length())
+	    {
+	        if (s1.charAt(i) > s2.charAt(i))
+	            return 1;
+	        else if (s1.charAt(i) < s2.charAt(i))
+	            return -1;
+	        i++;
+	    }
+	    
+	    if (s1.length() > s2.length())
+	        return -1;
+	        
+	    else
+	        return 1;
+	}
+}
+
+Arrays-Intersection Of Two Arrays
+
+Take as input N, the size of array. Take N more inputs and store that in an array. Take N more inputs and store that in another array. Write a function which gives the intersection of two arrays in an ArrayList of integers and Print the ArrayList.
+
+Input Format
+First line contains N denoting the size of the two arrays. Second line contains N space separated integers denoting the elements of the first array. Third line contains N space separated integers denoting the elements of the second array.
+
+Constraints
+Length of Arrays should be between 1 to 100000.
+
+Output Format
+Display the repeating elements in a comma separated manner enclosed in square brackets. The numbers should be sorted in increasing order.
+
+Sample Input
+7
+1 2 3 1 2 4 1
+2 1 3 1 5 2 2
+Sample Output
+[1, 1, 2, 2, 3]
+Explanation
+Check which integer is present in both the arrays and add them in an array .Print this array as the ans.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        // Your Code Here
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int one[] = new int[n];
+        int two[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            one[i] = sc.nextInt();
+
+        for (int i = 0 ; i < n; i++)
+            two[i] = sc.nextInt();
+
+        Arrays.sort(one);
+        Arrays.sort(two);
+
+        System.out.println(Intersection(one, two));
+
+    }
+
+    public static ArrayList<Integer> Intersection(int one[], int two[])
+    {
+        int i = 0;
+        int j = 0;
+
+        ArrayList<Integer> res = new ArrayList<Integer>();
+
+        while (i < one.length && j < two.length)
+        {
+            if (one[i] < two[j])
+                i++;
+            
+            else if (one[i] > two[j])
+                j++;
+
+            else
+            {
+                res.add(one[i]);
+                i++;
+                j++;
+            }
+        }
+
+        return res;
+    }
+}
+
+// Solution Code CB
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Practice {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        HashMap<Integer, Integer> freq = new HashMap<>();// <Number,Frequency> pair
+        int n = sc.nextInt();
+        int temp;
+        for (int i = 0; i < n; i++) {
+            temp = sc.nextInt();
+            if (!freq.containsKey(temp)) {
+                freq.put(temp, 1);
+            } else {
+                freq.replace(temp, 1 + freq.get(temp));
+            }
+        }
+
+        // freq.forEach((k, v) -> System.out.println("k = " + k + " v = " + v));
+
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            temp = sc.nextInt();
+            if (freq.containsKey(temp) && freq.get(temp) > 0) {
+                freq.replace(temp, freq.get(temp) - 1); // Decrement frequency to ensure it is not repeated
+                ans.add(temp);
+            }
+        }
+
+        Collections.sort(ans);
+
+        System.out.print("[");
+        for (int i = 0; i < ans.size(); i++) {
+            System.out.print(ans.get(i));
+            if (i < ans.size() - 1)
+                System.out.print(", ");
+        }
+        System.out.println("]");
+    }
+}
+
+Can You Read This?
+
+One of the important aspect of object oriented programming is readability of the code. To enhance the readability of code, developers write function and variable names in Camel Case. You are given a string, S, written in Camel Case. FindAllTheWordsContainedInIt.
+
+Input Format
+A single line contains the string.
+
+Constraints
+|S|<=1000
+
+Output Format
+Print words present in the string, in the order in which it appears in the string.
+
+Sample Input
+IAmACompetitiveProgrammer
+Sample Output
+I
+Am
+A
+Competitive
+Programmer
+Explanation
+There are 5 words in the string.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        // System.out.println(s);
+
+        int count = 0;
+
+        ArrayList<String> list = new ArrayList<String>();
+
+        int i = 0;
+
+        while (i < s.length() && Character.isUpperCase(s.charAt(i)))
+        {
+            String res = "";
+
+            res += Character.toString(s.charAt(i));
+
+            i++;
+
+            while (i < s.length() && !Character.isUpperCase(s.charAt(i)))
+            {
+                res += Character.toString(s.charAt(i));
+                i++;
+            }
+
+            list.add(res);
+
+            
+        }
+
+        // System.out.println(list);
+
+        for (String e : list)
+            System.out.println(e);
+
+        
+
+    }
+}
+
+// Solution Code CB
+
+public static void CanYouReadThis() {
+
+        Scanner scn = new Scanner(System.in);
+
+        String str = scn.next();
+        for(int i = 0;i < str.length();i++) {
+
+            if(i != 0 && Character.isUpperCase(str.charAt(i))) {
+                System.out.println();
+            }
+
+            System.out.print(str.charAt(i));
+        }
+}
+
+Form Biggest Number
+
+You are provided an array of numbers. You need to arrange them in a way that yields the largest value.
+
+Input Format
+First line contains integer t which is number of test case.
+For each test case, you are given a single integer n in the first line which is the size of array A[] and next line contains n space separated integers denoting the elements of the array A .
+
+Constraints
+1<=t<=100
+
+1<=m<=100
+
+1<=A[i]<=10^5
+
+Output Format
+Print the largest value.
+
+Sample Input
+1
+4
+54 546 548 60
+Sample Output
+6054854654
+Explanation
+Upon rearranging the elements of the array , 6054854654 is the largest possible number that can be generated.
+
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) 
+    {
+
+        Scanner scn = new Scanner(System.in);
+        int t = scn.nextInt();
+        while(t-- > 0)
+        {
+            int n = scn.nextInt();
+            int arr[] = new int[n];
+            for(int i=0; i<n; i++)
+                arr[i] = scn.nextInt();
+            
+            System.out.println(formBiggestNo(arr));
+        }
+        
+    }
+
+    public static String formBiggestNo(int arr[])
+    {
+        String sa[] = new String[arr.length];
+        for (int i = 0; i < arr.length; i++)
+            sa[i] = Integer.toString(arr[i]);
+
+        Arrays.sort(sa, new Comparator<String>()
+        {
+            public int compare(String a, String b)
+            {
+                String A = a+b;
+                String B = b+a;
+                return B.compareTo(A);
+            }
+        });
+
+        if (sa[0].equals("0"))
+            return "0";
+
+        StringBuilder sb = new StringBuilder();
+        for (String s : sa)
+            sb.append(s);
+        
+        return sb.toString();
+    }
+
+}
+
+// Solution Code CB
+
+Approach
+A simple solution that comes to our mind is to sort all numbers in descending order, but simply sorting doesn’t work. For example, 548 is greater than 60, but in output 60 comes before 548. As a second example, 98 is greater than 9, but 9 comes before 98 in output.
+
+So how do we go about it? The idea is to use any comparison based sorting algorithm. In the used sorting algorithm, instead of using the default comparison, write a comparison function myCompare() and use it to sort numbers. Given two numbers X and Y, how should myCompare() decide which number to put first – we compare two numbers XY (Y appended at the end of X) and YX (X appended at the end of Y). If XY is larger, then X should come before Y in output, else Y should come before. For example, let X and Y be 542 and 60. To compare X and Y, we compare 54260 and 60542. Since 60542 is greater than 54260, we put Y first.
+
+CODE:
+
+public class Main {
+   public static Scanner scan = new Scanner(System.in);
+
+    public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+
+        int tc = scn.nextInt();
+
+        while (tc > 0) {
+            int n = scn.nextInt();
+
+            int[] arr = new int[n];
+
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = scn.nextInt();
+            }
+
+            sort(arr);
+
+            display(arr);
+            tc--;
+        }
+    }
+
+    public static void display(int[] arr) {
+
+        for (int val : arr) {
+            System.out.print(val + "");
+        }
+
+        System.out.println();
+    }
+
+    public static int[] takeInput() {
+        int len = scan.nextInt();
+        int[] arr = new int[len];
+        for (int i = 0; i < len; i++) {
+            arr[i] = scan.nextInt();
+        }
+        return arr;
+    }
+
+    public static void sort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (compare(arr[j], arr[j + 1]) > 0) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static int compare(int n1, int n2) {
+        String val1 = n1 + "" + n2;
+        String val2 = n2 + "" + n1;
+
+        int val1int = Integer.valueOf(val1);
+        int val2int = Integer.valueOf(val2);
+
+        if (val1int > val2int)
+            return -1;
+        else
+            return 1;
+    }
+
+}
+
+// SHORT CODE ABOVE ONE
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+
+    int arr[] = {54, 546, 548, 60};
+    
+    sort(arr);
+    
+    for (int e : arr)
+        System.out.print(e);
+    
+
+	}
+	
+	public static void sort(int arr[])
+	{
+	    for (int i = 0; i < arr.length-1; i++)
+	    {
+	        for (int j  = 0; j < arr.length-i-1; j++)
+	        {
+	            if (CompareTo(arr[j], arr[j+1]) > 0)
+	            {
+	                int temp = arr[j];
+	                arr[j] = arr[j+1];
+	                arr[j+1] = temp;
+	            }
+	        }
+	    }
+	}
+	
+	public static int CompareTo(int n1, int n2)
+	{
+	    String intval1 = n1 + "" + n2;
+	    String intval2 = n2 + "" + n1;
+	    
+	    if (Integer.valueOf(intval1) > Integer.valueOf(intval2))
+	        return -1;
+	    else
+	        return 1;
+	}
+}
+//6054854654
+
+Strings-Remove Duplicates
+
+Take as input S, a string. Write a function that removes all consecutive duplicates. Print the value returned.
+
+Input Format
+String
+
+Constraints
+A string of length between 1 to 1000
+
+Output Format
+String
+
+Sample Input
+aabccba
+Sample Output
+abcba
+Explanation
+For the given example, "aabccba", Consecutive Occurrence of a is 2, b is 1, and c is 2.
+
+After removing all of the consecutive occurences, the Final ans will be : - "abcba".
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.next();
+
+        String res = "";
+
+        res += s.charAt(0);
+
+        for (int i = 1; i < s.length(); i++)
+        {
+            if (res.charAt(res.length()-1) != s.charAt(i))
+            {
+                res += s.charAt(i);
+            }
+
+        }
+
+        System.out.println(res);
+
+
+    }
+}
+
+// Solution Code CB (USED RECURSION)
+
+Algorithm :
+Obtain the result for the substring starting at index 1 recursively. Store this result in a new string , say 'ros' .
+Check whether the first character of ros and original string are same. If so , return ros only omitting s[0].
+Else return s[0] + ros. (ros = remaining of string)
+
+import java.util.*;
+
+public class Main {
+
+    static String duplicateChar(String s) {
+        if (s.length() <= 1) {
+            return s;
+        }
+
+        String ros = duplicateChar(s.substring(1));
+
+        if (s.charAt(0) == ros.charAt(0)) {
+            return  ros;
+        }
+
+        return s.charAt(0) + ros;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        System.out.println(duplicateChar(s));
+    }
+
+Diagonal Traversal
+
+Given an array of M x N elements (M rows, N columns), return all elements of the array in diagonal order .
+
+Input Format
+Two integers M(row) and N(column) and Second line contains N*M space separated integers denoting the elements of Array.
+
+Constraints
+The total number of elements of the given array will not exceed 10,000.
+
+Output Format
+display Diagonal
+
+Sample Input
+3 3
+1 2 3 4 5 6 7 8 9
+Sample Output
+1 2 4 7 5 3 6 8 9 
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+
+        int arr[][] = new int[m][n];
+        for (int i = 0 ; i < m; i++)
+        {
+            for (int j = 0 ; j < n; j++)
+                arr[i][j] = sc.nextInt();
+        }
+            
+        PrintDiagonal(arr, m, n);   
+    }
+
+    public static void PrintDiagonal(int arr[][], int m, int n)
+    {
+        int res[] = new int[m*n];
+
+        int row = 0, col = 0;
+
+        for (int i = 0; i < m*n ; i++)
+        {
+            res[i] = arr[row][col];
+
+            if ((row+col)%2 == 0)
+            {
+                // even upward ==> row--, col++
+
+                if (col == n-1)
+                    row++;
+                else if (row == 0)
+                    col++;
+                else
+                {
+                    row--;
+                    col++;
+                }
+            }
+            else
+            {
+                // odd downward ==> row++, col--
+
+                if (row == m-1)
+                    col++;
+                else if (col == 0)
+                    row++;
+                else
+                {
+                    row++;
+                    col--;
+                }
+            }
+        }
+
+        for (int e : res)
+            System.out.print(e + " ");
+    }
+}
+
+// ONE MORE SOLUTION USING ARRAYLIST (YOUTUBE) https://www.youtube.com/watch?v=0DnG0Kc9M2E
+
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+
+    // int arr[] = {54, 546, 548, 60};
+    
+    // sort(arr);
+    
+    // for (int e : arr)
+    //     System.out.print(e);
+        
+    
+    // ArrayList<ArrayList<Integer>> l = new ArrayList<ArrayList<Integer>>();
+    
+    // System.out.print(l);
+    
+    // ArrayList<Integer> temp = new ArrayList<>();
+    
+    // temp.add(10);
+    // temp.add(20);
+    // temp.add(30);
+    
+    // l.add(temp);
+    
+    // l.get(0).add(100);
+    // System.out.print(l);
+    
+    
+    // for (int i = 0; i < 3; i++)
+    //     l.add(new ArrayList<Integer>());
+        
+    
+    // System.out.print(l);
+    
+    // for (int i = 0; i < 3; i++)
+    //     l.get(i).add(10);
+    
+    // System.out.print(l);
+    
+    
+    int arr[][] = { {1,2,3, 4}, {5,6, 7,8}, {9, 10,11,12}, {13,14,15,16} };
+    
+    int diag = arr.length + arr[0].length - 1;
+    
+    System.out.println(diag);
+    
+    ArrayList<ArrayList<Integer>> l = new ArrayList<>();
+    
+    for (int i = 0; i < diag; i++)
+        l.add(new ArrayList<Integer>());
+        
+    System.out.println(l);
+    
+    for (int r = 0; r < arr.length; r++)
+    {
+        for (int c = 0; c < arr[0].length; c++)
+        {
+            l.get(r+c).add(arr[r][c]);
+        }
+    }
+    
+    System.out.println(l);
+    
+    // System.out.println(l.get(0).get(0));
+    
+    for (int r = 0; r < l.size() ; r++)
+    {
+        for (int c = 0; c < l.get(r).size(); c++)
+        {
+            if (r % 2 == 1)
+                continue;
+                // System.out.println(l.get(r).get(c));
+            else
+            {
+                Collections.reverse(l.get(r));
+            }
+        }
+    }
+    
+    System.out.println(l);
+    
+    for (int r = 0; r < l.size() ; r++)
+    {
+        for (int c = 0; c < l.get(r).size(); c++)
+        {
+            System.out.print(l.get(r).get(c) + " ");
+        }
+    }
+    
+    // 1 2 4 7 5 3 6 8 9 
+    // 1 2 5 9 6 3 4 7 10 13 14 11 8 12 15 16 
+
+	}
+}
+
+
+// Solution Code CB
+
+Diagonal Traversal
+Given a matrix of M x N elements (M rows, N columns), return all elements of the matrix in diagonal order as shown in the below image.
+Algorithm:-
+1.Initialize a result array that we will eventually return.
+2.We would have an outer loop that will go over each of the diagonals one by one. As mentioned before, the elements in the first row and the last column would actually be the heads of their corresponding diagonals.
+3.We then have an inner while loop that iterates over all the elements in the diagonal. We can calculate the number of elements in the corresponding diagonal by doing some math but we can simply iterate until one of the indices goes out of bounds.
+
+The first row and the last column in this problem would serve as the starting point for the corresponding diagonal. Given an element inside a diagonal, say, [i, j]we can either go up the diagonal by going one row up and one column ahead i.e. [i - 1, j + 1]or, we can go down the diagonal by going one row down and one column to the left i.e. [i + 1, j - 1]
+Note: that this applies to diagonals that go from right to left only.
+4.For each diagonal we will need a new list or dynamic array like data structure since we don't know what size to allocate. Again, we can do some math and calculate the size of that particular diagonal and allocate memory; but it's not necessary for this explanation.
+5.For odd numbered diagonals, we simply need to add the elements in our intermediary array, in reverse order to the final result array.
+Time Complexity: O(N* M)
+Solution Link :https://ide.codingblocks.com/s/211592
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int  n = sc.nextInt();
+        int m = sc.nextInt();
+        int arr [][] = new int [n][m];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                arr [i][j] = sc.nextInt();
+            }
+        }
+        int ans []  = findDiagonalOrder(arr);
+        for(int i=0; i<ans.length; i++){
+            System.out.print(ans[i]+" ");
+        }
+    }
+    public static int[] findDiagonalOrder(int[][] arr) {
+
+        // Check for empty matrices
+        if (arr == null || arr.length == 0) {
+            return new int[0];
+        }
+
+
+        int N = arr.length;
+        int M = arr[0].length;
+
+
+        int[] result = new int[N*M];
+        int k = 0;
+        ArrayList<Integer> intermediate = new ArrayList<Integer>();
+
+
+        for (int d = 0; d < N + M - 1; d++) {
+
+            intermediate.clear();
+
+
+            int r = d < M ? 0 : d - M + 1;
+            int c = d < M ? d : M - 1;
+
+
+            while (r < N && c > -1) {
+
+                intermediate.add(arr[r][c]);
+                ++r;
+                --c;
+            }
+
+
+            if (d % 2 == 0) {
+                Collections.reverse(intermediate);
+            }
+
+            for (int i = 0; i < intermediate.size(); i++) {
+                result[k++] = intermediate.get(i);
+            }
+        }
+        return result;
+    }
+}
+
+Python
+
+def findDiagonalOrder(arr):
+    if n == 0:
+        return []
+
+    result = [0]*(n*m)
+    k = 0
+    intermediate = []
+
+    for d in range(n+m-1):
+        intermediate = []
+
+        if d < m:
+            r = 0
+            c = d
+        else:
+            r = d-m+1
+            c = m-1
+
+        while r < n and c > -1:
+            intermediate.append(arr[r][c])
+            r += 1
+            c -= 1
+
+        if d % 2 == 0:
+            intermediate.reverse()
+
+        for i in range(len(intermediate)):
+            result[k] = intermediate[i]
+            k += 1
+
+    return result
+
+
+n, m = map(int, input().split())
+arr = list(map(int, input().split()))
+a = []
+for i in range(n):
+    row = arr[i*m:(i+1)*m]
+    a.append(row)
+
+ans = findDiagonalOrder(a)
+print(*ans)
+
+
+// My PYTHON SOLUTION
+def findDiagonalOrder(matrix):
+
+    if not matrix or not matrix[0]:
+        return []
+
+    num_rows, num_cols = len(matrix), len(matrix[0]) 
+    
+    diagonals = [ [] for _ in range(num_rows + num_cols - 1)]
+
+    for i in range(num_rows):
+    
+        for j in range(num_cols): 
+            diagonals[i + j].append(matrix[i][j])
+    
+    res = diagonals[0]
+    
+    for x in range(1, len(diagonals)): 
+        if x % 2 == 1:
+            res.extend(diagonals[x])
+    
+        else:
+            res.extend(diagonals[x][::-1])
+    
+    return res
+    
+l = [ [1,2,3], [4,5,6], [7,8,9] ]
+
+print(findDiagonalOrder(l)) # 1 2 4 7 5 3 6 8 9 
+
+Strings-Toggle Case
+
+Take as input S, a string. Write a function that toggles the case of all characters in the string. Print the value returned.
+
+Input Format
+String
+
+Constraints
+Length of string should be between 1 to 1000.
+
+Output Format
+String
+
+Sample Input
+abC
+Sample Output
+ABc
+Explanation
+Toggle Case means to change UpperCase character to LowerCase character and vice-versa.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.next();
+
+        String toggle = "";
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+
+            if (Character.isUpperCase(ch))
+                toggle += Character.toString(ch).toLowerCase();
+            else
+                toggle += Character.toString(ch).toUpperCase();
+        }
+
+        System.out.println(toggle);
+    }
+}
+
+// Solution Code CB
+
+Use the property of ascii value of each characcter. Required Code is given below :
+
+Algo
+1. Put a Loop on each character of String.
+2. if the character is Upper Case then simply convert it into lowerCase.
+3. if the character is Lower Case then simply convert it into UpperCase.
+
+public static String toggleCase(String str){
+
+      String ans = "";
+
+      for(int i = 0;i < str.length();i++){
+
+          char ch = str.charAt(i);
+
+          if(ch >= 'a' && ch <= 'z'){
+              ans += (char)(ch - 32); //Lower to Upper
+          }else if(ch >= 'A' && ch <= 'Z'){
+              ans += (char)(ch + 32); //Upper to Lower
+          }
+      }
+
+      return ans;
+  }
+
+
+Strings-Count Palindromic Substrings
+
+Take as input S, a string. Write a program that gives the count of substrings of this string which are palindromes and Print the ans.
+
+Input Format
+Single line input containing a string
+
+Constraints
+Length of string is between 1 to 1000.
+
+Output Format
+Integer output showing the number of palindromic substrings.
+
+Sample Input
+abc
+Sample Output
+3
+Explanation
+For the given sample case , the palindromic substrings of the string abc are "a","b" and "c".So, the ans is 3.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next(); // abbbc ==> ans = 8
+
+
+        System.out.println(Substring(s));
+
+    }
+
+    public static int Substring(String s)
+    {
+        int count = 0;
+        for (int si = 0; si < s.length(); si++)
+        {
+            for (int ei = si+1; ei <= s.length(); ei++)
+            {
+                String ns = s.substring(si, ei); // a, ab, abb, abbb, abbbc, b, bb, bbb, bbbc, b, bb, bbc, b, bc, c
+                // System.out.println(ns);
+
+                if (isPalindrome(ns))
+                    count+=1;
+            }
+        }
+
+        return count;
+    }
+
+    public static boolean isPalindrome(String s)
+    {
+        if (s.length() == 1)
+            return true;
+
+        int i = 0;
+        int j = s.length()-1;
+
+        while (i < j)
+        {
+            if (s.charAt(i) != s.charAt(j))
+                return false;
+
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+}
+
+
+// Solution Code CB
+
+This problem is a advance part of the isPalindrome and print all subsets of a String.
+
+Algo
+1. Write a Function to generate Substrings of all Length.
+2. Write a Function to check is the String is Palindrome or not.
+3. Pass each generated substring to palindrome and if returns true then print the string otherwise ignore.
+
+public static boolean isPalindrome(String str) {
+
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < right) {
+
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+
+            left++;
+            right--;
+
+        }
+
+        return true;
+
+    }
+
+    public static int countPalindromicSS(String str) {
+
+        int count = 0;
+
+        for (int si = 0; si < str.length(); si++) {
+
+            for (int ei = si + 1; ei <= str.length(); ei++) {
+
+                String ss = str.substring(si, ei);
+                if (isPalindrome(ss))
+                    count++;
+            }
+        }
+
+        return count;
+    }
+
+Maximum length Bitonic Subarray
+
+You are provided n numbers of array. You need to find the maximum length of bitonic subarray. A subarray A[i … j] is biotonic if there is a k with i <= k <= j such that A[i] <= A[i + 1] … <= A[k] >= A[k + 1] >= .. A[j – 1] > = A[j] i.e subarray is first increasing and then decreasing or entirely increasing or decreasing.
+
+Input Format
+First line contains integer t which is number of test case. For each test case, it contains an integer n which is the size of array and next line contains n space separated integers.
+
+Constraints
+1<=t<=100 1<=n<=1000000
+
+Output Format
+Print the maximum length.
+
+Sample Input
+2
+6
+12 4 78 90 45 23
+4
+40 30 20 10
+Sample Output
+5
+4
+Explanation
+ForMaximum length = 4, 78, 90, 45, 23
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+		
+		// int arr[] = {12,4,78,90,45,23};
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+
+            int n = sc.nextInt();
+            int arr[] = new int[n];
+            for (int i = 0 ; i < n; i++)
+                arr[i] = sc.nextInt();
+            
+            int inc[] = new int[arr.length];
+            
+            
+            inc[0] = 1;
+            
+            for (int i = 1; i < arr.length; i++)
+            {
+                // fill arr left to right
+                if (arr[i] >= arr[i-1]) // 12 < 4 < 78 < 90 < 45 < 23 ans 1 1 2 3 1 1
+                {
+                    inc[i] = inc[i-1]+1;
+                }
+                    
+                    
+                else
+                {
+                    inc[i] = 1;
+                }
+                    
+            }
+            
+            // System.out.println(Arrays.toString(inc));
+            
+            int dec[] = new int[arr.length];
+            
+            dec[arr.length-1] = 1;
+            
+            for (int i = arr.length-2; i >= 0; i--)
+            {
+                // fill arr right to left
+                if (arr[i] >= arr[i+1]) // 12 > 4 > 78 > 90 > 45 > 23 ans 2 1 1 3 2 1 
+                    dec[i] = dec[i+1]+1;
+                    
+                else
+                    dec[i] = 1;
+            }
+            
+            // System.out.println(Arrays.toString(dec));
+            
+            int i = 0;
+            
+            int sum = Integer.MIN_VALUE;
+            
+            while (i < arr.length)
+            {
+                int lsum = inc[i] + dec[i] - 1; // FORMULA
+                
+                if (lsum > sum)
+                    sum = lsum;
+                    
+                i+=1;
+            }
+            
+            System.out.println(sum);
+
+            t-=1;
+        }	
+	}
+}
+
+
+// Solution Code CB
+
+Approach
+We create two arrays - 'inc' and 'dec'
+
+1. inc[i] stores the length of increasing subarray till i.
+2. dec[i] stores the length of decreasing subarray starting from index i.
+3. Doing so gives us the length of increasing and decreasing subarray at each index in O(n) time.
+4. We calculate the length of the longest bitonic subarray by finding the maximum inc[i] + dec[i] - 1
+5. We subtract one since the current element at ith index is included in both the increasing and decreasing subarray lengths.
+
+Algorithm
+1. Initialize inc[0] to 1 and dec[n-1] to 1
+
+2. Creating inc[] array
+   a. Till end of the array ie, i=1 to n, if arr[i] > arr[i-1] then inc[i] = inc[i-1] + 1. else, inc[i] = 1
+
+3. Creating dec[] array
+   a. From the end of the array ie, i = n-2 till i =0, if arr[i] > arr[i+1] then dec[i] = dec[i+1] +1 else, dec[i] = 1
+
+Java Code
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scn = new Scanner(System.in);
+        int t=scn.nextInt();
+        while(t-- > 0) {
+        int n = scn.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = scn.nextInt();
+        }
+        System.out.println(bitonic(arr));
+        }
+    }
+
+    public static int bitonic(int arr[]) 
+    { 
+        int n=arr.length;
+        int[] inc = new int[n]; 
+
+        int[] dec = new int[n]; 
+        int max; 
+
+        inc[0] = 1; 
+        dec[n-1] = 1; 
+        for (int i = 1; i < n; i++) 
+           inc[i] = (arr[i] >= arr[i-1])? inc[i-1] + 1: 1; 
+        for (int i = n-2; i >= 0; i--) 
+            dec[i] = (arr[i] >= arr[i+1])? dec[i+1] + 1: 1; 
+        max = inc[0] + dec[0] - 1; 
+        for (int i = 1; i < n; i++) 
+            if (inc[i] + dec[i] - 1 > max) 
+                max = inc[i] + dec[i] - 1; 
+
+        return max; 
+    } 
+
+}
+
+Strings-Odd Even Character
+
+Take as input S, a string. Write a function that replaces every odd character with the character having just higher ascii code and every even character with the character having just lower ascii code. Print the value returned.
+
+Input Format
+String
+
+Constraints
+Length of string should be between 1 to 1000.
+
+Output Format
+String
+
+Sample Input
+abcg
+Sample Output
+badf
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        System.out.println(StringOddEven(s));
+
+        // char ch = 'a';
+        // char ans = (char)((int)ch+1);
+        // System.out.println(ans);
+
+    }
+
+    public static String StringOddEven(String s)
+    {
+        String res = "";
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            char temp = s.charAt(i);
+
+            //even ++
+            if (i % 2== 0)
+            {
+                // if (temp == 'z')
+                //     res += 'a';
+                // else
+                res += (char)((int)temp + 1);
+                
+            }
+            // odd --
+            else
+            {
+                res += (char)((int)temp - 1);
+            }
+        }
+        return res;
+    }
+}
+
+// SECOND SIMPLE SOLUTION USING Ternary Operator
+// public class Main
+// {
+// 	public static void main(String[] args) {
+
+//         String s = "abcg";
+        
+//         String res = "";
+        
+//         for (int i = 0; i < s.length(); i++)
+//         {
+//             res += (i % 2 == 0) ? (char)(s.charAt(i)+1) : (char)(s.charAt(i)-1); // Ternary Operator
+//         }
+        
+//         System.out.println(res);
+// 	}
+// }
+
+
+// Solution Code CB
+
+
+All you need to do is Put a Loop on the String and check if the current position is odd or even. Then if the current pos is even then decrrement the ch otherwise increment your ch.
+
+public static String changeCase(String str) {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < str.length(); i++) {
+
+            char ch = str.charAt(i);
+
+            if ((i + 1) % 2 == 0) {
+                sb.append((char)(ch - 1));
+            } else{
+                sb.append((char)(ch + 1));
+            }
+
+        }
+
+        return sb.toString();
+
+    }
+
+0's_At_End ( Time Complexity )
+
+Take as input N, a number. Take N more inputs to form an array. Reorder items of array in such a manner that all 0’s are moved to end. Target complexity is O(n)
+
+Input Format
+Take as input N, a number. Take N more inputs to form an array
+
+Constraints
+None
+
+Output Format
+Display the array containing all the zeros at the end , the numbers should be separated by a space
+
+Sample Input
+5
+0
+0
+0
+0
+1
+Sample Output
+1 0 0 0 0 
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.nextInt();
+
+
+        int start = 0;
+        int end = arr.length-1;
+
+        while (start < end)
+        {
+            if (arr[start] == 1 && arr[end] == 0)
+            {
+                start += 1;
+                end -= 1;
+            }
+            else if (arr[start] == 1)
+                start+=1;
+
+            else if (arr[end] == 0)
+                end -= 1;
+
+            else
+            {
+                int temp = arr[start];
+                arr[start] = arr[end];
+                arr[end] = temp;
+
+                start += 1;
+                end -= 1;
+            }
+            
+        }
+
+        for (int e : arr)
+        {
+            System.out.print(e + " ");
+        }
+    }
+}
+
+
+// Solution Code CB
+
+NOT THERE
+
+Rain Water Trapping
+
+You are given an input array whose each element represents the height of a line towers. The width of every tower is 1. It starts raining. Water is filled between the gap of towers if possible. You need to find how much water filled between these given towers.
+
+Input Format
+The first line consists of number of test cases T. Each test case consists an integer N as number of towers and next line contains the N space separated integers.
+
+Constraints
+1 <= N <= 1000000 1 <= t <= 10 0 <= A[i] <= 10000000
+
+Output Format
+Print how much unit of water collected among towers for each test case.
+
+Sample Input
+2
+6
+3  0  0  2  0  4
+12
+0  1  0  2  1  0  1  3  2  1  2  1
+Sample Output
+10
+6
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+		Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+            int n = sc.nextInt();
+            int arr[] = new int[n];
+            for (int i = 0 ; i < n; i++)
+                arr[i] = sc.nextInt();
+
+		    System.out.println(RainWaterHarvesting(arr));
+
+            t-=1;
+        }
+
+		
+    }
+
+	public static int RainWaterHarvesting(int arr[])
+	{
+		int prefixmax[] = new int[arr.length];
+		int suffixmax[] = new int[arr.length];
+
+		prefixmax[0] = arr[0];
+
+		for (int i = 1; i < arr.length; i++)
+		{
+			if (prefixmax[i-1] < arr[i])
+				prefixmax[i] = arr[i];
+			else
+				prefixmax[i] = prefixmax[i-1];
+		}
+
+		// System.out.println(Arrays.toString(prefixmax));
+
+		suffixmax[arr.length-1] = arr[arr.length-1];
+
+		for (int i = arr.length-2; i >= 0; i--)
+		{
+			if (suffixmax[i+1] < arr[i])
+				suffixmax[i] = arr[i];
+
+			else
+				suffixmax[i] = suffixmax[i+1];
+		}
+
+		// System.out.println(Arrays.toString(suffixmax));
+
+		int waterStore[] = new int[arr.length];
+
+		for (int i = 0; i < arr.length; i++)
+		{
+			waterStore[i] = Math.min(prefixmax[i], suffixmax[i]) - arr[i];
+		}
+
+		// System.out.println(Arrays.toString(waterStore));
+
+		int waterStoreSum = 0;
+
+		for (int e : waterStore)
+			waterStoreSum += e;
+
+		return waterStoreSum;
+	}
+}
+
+
+// Solution Code CB
+
+An element of an array can store water if there are higher bars on left and right. We can find the amount of water to be stored in every element by finding the heights of bars on the left and right sides. The idea is to compute the amount of water that can be stored in every element of the array. For example, consider the array {3, 0, 0, 2, 0, 4}, we can store two units of water at indexes 1 and 2, and one unit of water at index 2.
+
+A Simple Solution is to traverse every array element and find the highest bars on left and right sides. Take the smaller of two heights. The difference between smaller height and height of the current element is the amount of water that can be stored in this array element. The time complexity of this solution is O(n2).
+
+An Efficient Solution is to the pre-compute highest bar on left and right of every bar in O(n) time. Then use these pre-computed values to find the amount of water in every array element.
+
+
+public static int maxWater_optimized(int[] arr){
+
+    int n = arr.length;
+    int water = 0;  // To store the final ans
+
+    int left_max = 0;     //Which stores the current max height of the left side
+    int right_max = 0;   //Which stores the current max height of the right side
+
+    int lo = 0;                //Counter to traverse from the left_side
+    int hi = n - 1;           //Counter to traverse from the right_side
+
+    while(lo <= hi){
+
+      if(arr[lo] < arr[hi]){         
+
+        if(arr[lo] > left_max){
+          left_max = arr[lo];             //Updating left_max
+        }else{ 
+
+          water += left_max - arr[lo];  //Calculating the ans
+        }
+        lo++;
+      }else{
+
+        if(arr[hi] > right_max){
+          right_max = arr[hi];               //Updating right_max
+        }else{
+          water += right_max - arr[hi];  //Calculating the ans
+        }
+        hi--;
+      }
+
+    }
+
+    return water;  
+}
+
+
+Minimum Swaps
+
+You are given an unordered array consisting of consecutive integers [1, 2, 3, …, n] without any duplicates. You are allowed to swap any two elements. You need to find the minimum number of swaps required to sort the array in ascending order.
+
+Input Format
+The first line contains an integer, n, the size of the array . The second line contains n space-separated integers arr[i].
+
+Constraints
+1 <= n <= 10^5 1 <= arr[i] <= n
+
+Output Format
+Print the minimum number of swaps to sort the given array.
+
+Sample Input
+4
+4 3 1 2
+Sample Output
+3
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.nextInt();
+
+
+        int val = minSwaps(arr);
+
+        System.out.println(val);
+
+    }
+
+    public static int minSwaps(int arr[])
+    {
+        int count = 0;
+
+        int i = 0;
+
+        while (i < arr.length)
+        {
+            if (i+1 == arr[i])
+                i++;
+
+            else
+            {
+                int temp = arr[i];
+
+                arr[i] = arr[arr[i]-1];
+
+                arr[temp-1] = temp;
+
+                count++;
+            }
+        }  
+
+        return count;
+
+    }
+
+}
+
+// Solution Code CB
+
+The idea is that if a occupies b's position, b occupies c's position and so on, then there will be some integer x which will occupy a's position. So, this forms a cycle.
+So, if any element arr[i] is not at its correct position, we shift it to its correct position j then shift arr[j] to its correct position k and so on. So, if len is the length of the cycle (number of elements in the cycle), then it will require a minimum of (len-1) swaps to rearrange the elements of the cycle to their correct positions.
+We find all such cycles and compute our answer.
+The correct positions of all the elements can be found by sorting the array by value and keeping track of the old and new positions. You may gain more clarity by the setters solution.
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int a[100005];
+bool visited[100005];
+
+int solve(int n)
+{
+    pair<int, int> p[n];
+
+    for (int i = 0; i < n; i++)
+    {
+        p[i].first = a[i];
+
+        // Storing the original position of a[i]
+        p[i].second = i;
+    }
+
+    sort(p, p+n);
+    int ans = 0;
+
+    for (int i = 0; i < n; i++)
+    {    
+        //visited[i]=true indicates that index i belongs to a cycle that is already counted
+
+        //p[i].second = i denotes that the ith element was at its correct position
+
+        if (visited[i] || p[i].second == i)
+            continue;
+
+        int cycle_size = 0;
+        int j = i;
+
+        //Counting the size of the cycle
+        while (!visited[j])
+        {
+            visited[j] = 1;
+            j = p[j].second;
+            cycle_size++;
+        }
+
+        ans += (cycle_size - 1);
+    }
+
+    return ans;
+
+}
+
+int main()
+{
+
+    int n;
+    scanf("%d", &n);
+
+    for(int i = 0; i < n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+
+    int ans = solve(n);
+    printf("%d\n", ans);
+    return 0;
+
+}
+
+
+Longest Common Prefix
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Input Format
+First Line Contains Single Integer n. Next line contain n strings
+
+Constraints
+length of strings is less than 1e5
+
+Output Format
+Single String
+
+Sample Input
+3
+aad aas aac
+Sample Output
+aa
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        String arr[] = new String[n];
+
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.next();
+
+        // System.out.println(Arrays.toString(arr));
+
+        String prefix;
+
+        if (arr.length == 0)
+            prefix = "";
+
+        else
+        {
+            prefix = arr[0];
+
+            for (int i = 1; i < arr.length; i++)
+            {
+                while (arr[i].indexOf(prefix) != 0) // there is {"abc", "def", "ghi"} in this o/p is "" means EMPTY after this is the prefix, NOW in while condition arr[i].indexOf(prefix) != 0 HERE "abc".indexOf("") != 0 ANSWER IS ==> 0 == 0
+                {
+                    prefix = prefix.substring(0, prefix.length()-1); // 0, 3-1 ==> 0, 2 in this 2 it would take till 1
+                }
+            }
+        }
+
+        System.out.println(prefix);
+
+        
+
+
+    }
+}
+
+// Solution Code CB
+
+Longest Common Prefix( using Binary Search)
+1.Find the string having the minimum length. Let this length be L.
+2.Perform a binary search on any one string (from the input array of strings). Let us take the first string and do a binary search on the characters from the index – 0 to L-1.
+3..Initially, take low = 0 and high = L-1 and divide the string into two halves – left (low to mid) and right (mid+1 to high).
+4.Check whether all the characters in the left half is present at the corresponding indices (low to mid) of all the strings or not. If it is present then we append this half to our prefix string and we look in the right half in a hope to find a longer prefix.(It is guaranteed that a common prefix string is there.)
+5.Otherwise, if all the characters in the left half is not present at the corresponding indices (low to mid) in all the strings, then we need not look at the right half as there is some character(s) in the left half itself which is not a part of the longest prefix string. So we indeed look at the left half in a hope to find a common prefix string. (It may be possible that we don’t find any common prefix string).
+time complexity is O(NM log M) M = Length of the largest string and N = Size of Array
+Second Approach
+1. Insert all the words one by one in the trie. After inserting we perform a walk on the trie 2.In this walk, go deeper until we find a node having more than 1 children(branching occurs) or 0 children (one of the string gets exhausted).This is because the characters (nodes in trie) which are present in the longest common prefix must be the single child of its parent, i.e- there should not be branching in any of these nodes.
+Time complexity O (N*M)
+
+
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        String ans[] = new String[n];
+        for (int i = 0; i < ans.length; i++) {
+            ans[i] = sc.next();
+        }
+        String rs = commonPrefix(ans, n);
+        if (rs.length() > 0) {
+            System.out.println(rs);
+        } else {
+            System.out.println("");
+        }
+
+    }
+
+    static int findMinLength(String arr[], int n) {
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i <= (n - 1); i++) {
+            if (arr[i].length() < min) {
+                min = arr[i].length();
+            }
+        }
+        return min;
+    }
+
+    public static boolean allContainsPrefix(String arr[], int n, String str, int start, int end) {
+        for (int i = 0; i <= (n - 1); i++) {
+            String arr_i = arr[i];
+
+            for (int j = start; j <= end; j++)
+                if (arr_i.charAt(j) != str.charAt(j))
+                    return false;
+        }
+        return true;
+    }
+
+    public static String commonPrefix(String arr[], int n) {
+    if(arr.length==0){
+    return "";
+    }
+        int index = findMinLength(arr, n);
+        String prefix = "";
+
+        int low = 0, high = index - 1;
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (allContainsPrefix(arr, n, arr[0], low, mid)) {
+
+                prefix = prefix + arr[0].substring(low, mid + 1);
+
+                low = mid + 1;
+            } else {// Go for the left part
+
+                high = mid - 1;
+            }
+        }
+
+        return prefix;
+    }
+}
+
+Rotate Image! (ANTI-CLOCKWISE ROTATE)
+
+Given a 2D array of size N x N. Rotate the array 90 degrees anti-clockwise.
+
+
+
+Input Format
+First line contains a single integer N. Next N lines contain N space separated integers.
+
+Constraints
+N < 1000
+
+Output Format
+Print N lines with N space separated integers of the rotated array.
+
+Sample Input
+4
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+Sample Output
+4 8 12 16 
+3 7 11 15 
+2 6 10 14 
+1 5 9 13 
+Explanation
+Rotate the array 90 degrees anticlockwise.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        
+
+        Scanner sc = new Scanner(System.in);
+
+        int row = sc.nextInt();
+        int col = row;
+
+        int arr[][] = new int[row][col];
+
+        for (int r = 0; r < row; r++)
+        {
+            for (int c = 0; c < col; c++)
+            {
+                arr[r][c] = sc.nextInt();
+            }
+        }
+
+        // for (int r = 0; r < row; r++)
+        // {
+        //     for (int c = 0; c < col; c++)
+        //     {
+        //         System.out.print(arr[r][c] + " ");
+        //     }
+        //     System.out.println();
+        // }
+
+        // TRANSPOSE
+        for (int r = 0; r < row; r++)
+        {
+            for (int c = r+1; c < col; c++)
+            {
+                int temp = arr[r][c]; // 01
+                arr[r][c] = arr[c][r]; // 10
+                arr[c][r] = temp;
+            }
+            
+        }
+
+        // System.out.println();
+
+        // for (int r = 0; r < row; r++)
+        // {
+        //     for (int c = 0; c < col; c++)
+        //     {
+        //         System.out.print(arr[r][c] + " ");
+        //     }
+        //     System.out.println();
+        // }
+
+
+        // SWAPING HERE ==> ANTI-CLOCKWISE ROTATE
+        for (int c = 0; c < col; c++)
+        {
+            for (int r = 0; r < row/2; r++)
+            {
+                int temp = arr[r][c];
+
+                arr[r][c] = arr[arr.length-1-r][c];
+
+                arr[arr.length-1-r][c] = temp;
+
+            }
+        }
+
+        // System.out.println();
+
+        for (int r = 0; r < row; r++)
+        {
+            for (int c = 0; c < col; c++)
+            {
+                System.out.print(arr[r][c] + " ");
+            }
+            System.out.println();
+        }
+  
+    }
+}
+
+
+// Solution Code CB
+
+A simple trick that we can observe is that we can first transpose the whole matrix along the leading diagonal and then reverse each row of the matrix. The resulting matrix will be out the rotated matrix. Here is the code for the following algorithm.
+
+public static void rotate(int[][] matrix) {
+
+        transpose(matrix);
+        for (int j = 0; j < matrix[0].length; j++) {
+            for (int i = 0; i < matrix.length / 2; i++) {
+
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[matrix.length - i - 1][j];
+                matrix[matrix.length - i - 1][j] = temp;
+            }
+        }
+             display(matrix);
+    }
+
+    public static void transpose(int[][] matrix) {
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i; j < matrix[0].length; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+    }
+    public static void display(int[][] matrix) {
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+Nobita Scored Good Marks
+
+Nobita scored good marks in his previous test, so his mom gave him x candies. Now, he wants to distribute the candies amongst his n friends(including himself).
+He wants to distribute the candies equally for which he can either ask her mom for more candies or can return her extra candies.
+
+He will do this in such a way that the number of candies that he takes or returns to his mom is minimum. Can you help him?
+
+Input Format
+First line contains an integer T-denoting the number of test cases.
+Next T lines contain two space separated integer x and n.
+
+Constraints
+1 <= T <= 10^5
+1 <=x,n <=10^9
+
+Output Format
+Print a single integer equal to minimum candies returned.
+
+Sample Input
+3
+14 4
+12 4
+10 3
+Sample Output
+2
+0
+1
+Explanation
+In the 1st test case, Nobita can return 2 candies to his mom and then left with 12 candies that can be divided amongst his 4 friends(including him as well), each will get 3 candies each.
+In 2nd test case , candies are already divisible by 4(Number of Friends). Hence the answer is 0.
+In 3rd test case , he will return 1 candy and left with 9 candies that can be distributed. Hence the answer in this case is 1.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+            int candies = sc.nextInt();
+            int friends = sc.nextInt();
+
+            int res;
+
+            res = candies % friends;
+            System.out.println(Math.min(friends-res, res));
+
+            t-=1;
+        }
+
+    }
+}
+
+
+// Solution Code CB
+
+EXPLANATION: We can take either the smallest number greater than x that is divisble by n or greatest number , smaller than x which is divisible by n.
+We will take the minimum of two.
+Code:
+
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+long long min(long long a, long long b){
+if(a<=b)
+return a;
+return b;
+ }
+
+int main(){
+int t;
+cin>>t;
+while(t){
+    t--;
+    long long int a;
+    cin>>a;
+    long long int b;
+    cin>>b;
+    if(a%b==0)
+        cout << 0 << endl;
+    else{
+        long long int x=a/b;
+        cout << min(a%b,((x+1)*(b) -a))<< endl;
+    }
+}
+
+
+}
+
+Longest K Unique Character Substrings
+
+Given a string you need to print the size of the longest possible substring that has exactly k unique characters.
+Note:- If there is no possible substring print -1.
+
+Input Format
+The first line of input contains an integer T denoting the no of test cases .Each test case contains two lines . The first line of each test case contains a string s and the next line conatains an integer k.
+
+Constraints
+1<=T<=100
+1<=k<=10
+
+Output Format
+For each test case in a new line print the required output.
+
+Sample Input
+2
+aaaa
+1
+qmb
+6
+Sample Output
+4
+-1
+
+CODE :
+
+// My Solution
+
+
+public class Main {
+  public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+        int t = scn.nextInt();
+        while(t!=0){
+        String str = scn.next();
+        int k = scn.nextInt();
+    System.out.println(solution(str,k));
+        t--;
+        }
+  }
+
+  public static int solution(String str, int k){
+      int maxLen = -1;
+    HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+    for (int i = 0, j = 0; i < str.length(); i++) {
+      char ch = str.charAt(i);
+      map.put(ch, map.getOrDefault(ch, 0) + 1);
+      if (map.size() == k) {
+        maxLen = Math.max(maxLen, i - j + 1);
+      } else {
+        while (map.size() > k) {
+          char l = str.charAt(j);
+          int count = map.get(l);
+          if (count == 1) {
+            map.remove(l);
+          } else {
+            map.put(l, map.get(l) - 1);
+          }
+          j++;
+        }
+      }
+    }
+    return maxLen;
+  }
+
+}
+
+
+// Solution Code CB
+
+The problem can be solved in O(n). Idea is to maintain a window and add elements to the window till it contains less or equal k Unique Character, update our result if required while doing so. If unique elements exceeds than required in window, start removing the elements from left side.
+
+Below are the implementations of above. The implementations assume that the input string alphabet contains only 26 characters (from ‘a’ to ‘z’). The code can be easily extended to 256 characters.
+
+Java Code:
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while(t-->0) {
+            String str = sc.next();
+            int k = sc.nextInt();
+        System.out.println(kUniques(str, k));
+        }
+
+
+    }
+    public static int kUniques(String str, int k) {
+
+        int freq [] = new int [26];
+        int start= 0;
+        int dis=0;
+        int max_len = Integer.MIN_VALUE;
+        for (int i = 0; i < str.length(); i++) {
+            int idx = str.charAt(i)-'a';
+            if(freq[idx]==0) {
+                dis++;
+            }
+            freq[idx]++;
+            while(dis>k) {
+                int new_idx = str.charAt(start)-'a';
+                freq[new_idx]--;
+                if(freq[new_idx]==0) {
+                    dis--;
+                }
+                start++;
+            }
+
+
+
+            max_len= Math.max(max_len, i-start+1);
+
+
+        }
+        if(max_len<k) {
+            return -1;
+        }
+        return max_len;
+
+    }
+
+}
+
+Sum of numbers in string
+
+Given a string containing alphanumeric characters, calculate sum of all numbers present in the string.
+
+Input Format
+First line contains the number of testcases.
+
+For each testcase, input a string
+
+Constraints
+1 <= T <= 100
+1 <= Length of string <= 10000
+
+Output Format
+Integer output for each testcase in a new line
+
+Sample Input
+1
+1abc23
+Sample Output
+24
+Explanation
+For 1abc23,
+1 + 23 = 24
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+            String s = sc.next();
+
+            System.out.println(findSum(s));
+
+            t--;
+        }
+
+    }
+
+    public static long findSum(String s)
+    {
+        String temp = "0";
+
+        long sum = 0L;
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            char ch = s.charAt(i);
+
+            if (Character.isDigit(ch))
+                temp += ch;
+            else
+            {
+                sum += Long.parseLong(temp);
+                temp = "0";
+            }
+        }
+
+
+        return sum+Long.parseLong(temp);
+    }
+}
+
+// Solution Code CB
+
+#include <iostream>
+using namespace std;
+
+int findSum(string str)
+{
+    string temp = "";
+
+    int sum = 0;
+
+    for (char ch : str)
+    {
+        if (isdigit(ch))
+            temp += ch;
+
+        else
+        {
+            sum += atoi(temp.c_str());
+
+            temp = "";
+        }
+    }
+
+    return sum + atoi(temp.c_str());
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        string s;
+        cin >> s;
+
+        cout << findSum(s) << endl;
+    }
+
+    return 0;
+}
+
+Leaders in an array
+
+Write a program to print all the LEADERS in the array. An element is leader if it is greater than all the elements to its right side. And the rightmost element is always a leader. For example int the array {16, 17, 4, 3, 5, 2}, leaders are 17, 5 and 2.
+
+Input Format
+First line contains size of the array.
+Second line contains the elements of the array.
+
+Constraints
+1 <= Size of array <= 100000
+
+Output Format
+Print the leaders in increasing order.
+
+Sample Input
+4
+5 7 10 6 
+Sample Output
+6 10 
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.nextInt();
+
+        // System.out.println(Arrays.toString(arr));
+
+        ArrayList<Integer> list = new ArrayList<Integer>();
+
+        for (int i = 0; i < arr.length-1; i++)
+        {
+            boolean flag = true;
+            for (int j = i+1; j < arr.length; j++)
+            {
+                if (arr[i] < arr[j])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+                list.add(arr[i]);
+        }
+        if (arr.length > 0)
+            list.add(arr[arr.length-1]);
+        // System.out.println(list);
+        Collections.sort(list);
+        // System.out.println(list);
+        for (int e : list)
+            System.out.print(e + " ");
+  
+
+    }
+}
+
+// Solution Code CB
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void printLeaders(vector<int> arr)
+{
+    vector<int> res;
+    int max_from_right = arr[arr.size() - 1];
+
+    cout << max_from_right << " ";
+
+    for (int i = arr.size() - 2; i >= 0; i--)
+    {
+        if (max_from_right <= arr[i])
+        {
+            max_from_right = arr[i];
+            res.push_back(max_from_right);
+        }
+    }
+
+    sort(res.begin(), res.end());
+    for (int x : res)
+    {
+        cout << x << " ";
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int &x : arr)
+    {
+        cin >> x;
+    }
+
+    printLeaders(arr);
+    return 0;
+}
+
+
+Union and Intersection of two sorted arrays
+
+Given two sorted arrays of different sizes, print their union and intersection.
+An union of two arrays will be the set containing all elements of both the arrays (no duplicates).
+An Intersection of two arrays will be the set of elements that are present in both the arrays (no duplicates).
+Print both the union and the intersection in increasing order.
+
+Input Format
+First line contains size of first array.
+Second line contains the elements of the first array.
+Third line contains size of second array.
+Fourth line contains the elements of the second array.
+
+Constraints
+1 <= Size of arrays <= 1000
+
+Output Format
+Print the union of the two arrays in first line and intersection in second line. Both should be printed in increasing order.
+
+Sample Input
+5
+1 2 4 6 10 
+3
+8 9 10 
+Sample Output
+1 2 4 6 8 9 10 
+10
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int arr1[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            arr1[i] = sc.nextInt();
+        
+        int m = sc.nextInt();
+        int arr2[] = new int[m];
+        for (int i = 0 ; i < m; i++)
+            arr2[i] = sc.nextInt();
+
+        ArrayList<Integer> union = new ArrayList<Integer>();
+
+        ArrayList<Integer> intersection = new ArrayList<Integer>();
+
+        int i = 0;
+        int j = 0;
+
+        int idx = 0;
+
+        while (i < arr1.length && j < arr2.length)
+        {
+
+            if (arr1[i] == arr2[j])
+            {
+                union.add(arr1[i]);
+                intersection.add(arr1[i]);
+                i++;
+                j++;
+            }
+            else if (arr1[i] < arr2[j])
+            {
+                union.add(arr1[i]);
+                i++;
+            }
+                
+            else
+            {
+                union.add(arr2[j]);
+                j++;
+            }
+                
+            
+        }
+
+        while (i < arr1.length)
+        {
+            union.add(arr1[i]);
+            i++;
+        }
+
+        while (j < arr2.length)
+        {
+            union.add(arr2[j]);
+            j++;
+        }
+
+
+        // System.out.println(union);
+        // System.out.println(intersection);
+
+        // LinkedHashSet<Integer> s = new LinkedHashSet(union);
+
+        ArrayList<Integer> nu = new ArrayList<Integer>();
+
+        for (int e : union)
+        {
+            if(!nu.contains(e))
+                nu.add(e);
+        }
+        
+
+        // for (int e : union)
+        //     System.out.print(e + " ");
+        
+        // System.out.println();
+
+        for (int e : nu)
+            System.out.print(e + " ");
+
+        System.out.println();
+        
+        for (int e : intersection)
+            System.out.print(e + " ");
+
+
+    }
+}
+
+// Solution Code CB (PYTHON)
+
+input()
+a = list(map(int, input().split()))
+input()
+b = list(map(int, input().split()))
+
+union = sorted(list(set(a + b)))
+intersection = sorted(list(set(a) & set(b)))
+
+for u in union:
+    print(u, end=' ')
+print()
+for i in intersection:
+    print(i, end=' ')
+
+Consecutive Characters
+
+Given a string s, the power of the string is the maximum length of a non-empty substring that contains only one unique character.
+
+Return the power of the string.
+
+Input Format
+Single line input containing a string
+
+Constraints
+Solve in O(n) time.
+
+Output Format
+Single integer output
+
+Sample Input
+abbcccddddeeeeedcba
+Sample Output
+5
+Explanation
+The substring "eeeee" is of length 5 with the character 'e' only.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.next();
+
+        int count = 1;
+        char prev = s.charAt(0);
+
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 1; i < s.length(); i++)
+        {
+            if (prev == s.charAt(i))
+                count+=1;
+            else
+            {
+                if (count > max)
+                    max = count;
+                
+                // System.out.println("ex");
+
+                prev = s.charAt(i);
+                count = 1;
+            }
+
+            if (i == s.length()-1) //&& prev == s.charAt(s.length()-1))
+            {
+                if (count > max)
+                    max = count;
+            }  
+        }
+
+        System.out.println(max);
+
+    }
+}
+
+// Solution Code CB (C++)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int maxPower(string s) {
+    int ans(1), k(0);
+    s += '*';
+    for (int i = 0; i + 1 < s.length(); ++i)
+        if (s[i] != s[i + 1]) {
+            ans = max(ans, i + 1 - k);
+            k = i + 1;
+        }
+    return ans;
+}
+
+int main() {
+    string s;
+    cin >> s;
+    cout << maxPower(s);
+
+    return 0;
+}
+
+
+// RECURSION
+
+Generate Binary Strings
+
+Given a string containing of ‘0’, ‘1’ and ‘?’ wildcard characters, generate all binary strings that can be formed by replacing each wildcard character by ‘0’ or ‘1’.
+
+Input Format
+The first line of input contains a single integer T denoting the number of test cases. Then T test cases follow. Each test case consist of two lines. The first line of each test case consists of a string S.
+
+Constraints
+1 ≤ T ≤ 60 1 ≤ length of string S ≤ 30
+
+Output Format
+Print all binary string that can be formed by replacing each wildcard character separated by space.
+
+Sample Input
+1
+1??0?101
+Sample Output
+10000101 10001101 10100101 10101101 11000101 11001101 11100101 11101101
+Explanation
+For the Given test case, 10000101 can be generated by replacing wildcard character from 1??0?101 by 0s.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int t = sc.nextInt();
+
+        while (t > 0)
+        {
+            String s = sc.next();
+
+            char str[] = s.toCharArray();
+
+            generateBinaryString(str, 0);
+            System.out.println();
+
+            t-=1;
+        }
+        
+    }
+
+    public static void generateBinaryString(char[] str, int vidx)
+    {
+        if (str.length == vidx)
+        {
+            // System.out.print(Arrays.toString(str) + " ");
+            // String ans = String.valueOf(str);
+            System.out.print(String.valueOf(str) + " ");
+            return;
+        }
+
+        if (str[vidx] == '?')
+        {
+            str[vidx] = '0';
+            generateBinaryString(str, vidx+1);
+
+            str[vidx] = '1';
+            generateBinaryString(str, vidx+1);
+
+            // BACKTRACKING
+            str[vidx] = '?';
+        }
+        else
+            generateBinaryString(str, vidx+1);
+    }
+
+    
+}
+
+// Solution Code CB
+
+Approach
+We pass index of next character to the recursive function. If the current character is a wildcard character ‘?’, we replace it by ‘0’ or ‘1’ and recurse for remaining characters. We print the string if we reaches its end.
+
+Code
+
+ public static void print(char str[], int index) 
+    { 
+        if (index == str.length) 
+        { 
+            System.out.print(str);
+            System.out.print(" ");
+            return; 
+        } 
+
+    if (str[index] == '?') 
+    { 
+        // replace '?' by '0' and recurse 
+        str[index] = '0'; 
+        print(str, index + 1); 
+
+        // replace '?' by '1' and recurse 
+        str[index] = '1'; 
+        print(str, index + 1); 
+
+        // NOTE: Need to backtrack as string 
+        // is passed by reference to the 
+        // function 
+        str[index] = '?'; 
+    } 
+    else
+        print(str, index + 1); 
+}
+
+Recursion-Ascii Subsequences
+
+Take as input str, a string. We are concerned with all the possible ascii-subsequences of str. E.g. “ab” has following ascii-subsequences “”, “b”, “98”, “a”, “ab”, “a98”, “97”, “97b”, “9798”
+
+a. Write a recursive function which returns the count of ascii-subsequences for a given string. Print the value returned.
+
+b. Write a recursive function which prints all possible ascii-subsequences for a given string (void is the return type for function).
+
+Input Format
+Enter the string
+
+Constraints
+None
+
+Output Format
+Display the number of ASCII-subsequences and display all the ASCII- subsequences
+
+Sample Input
+ab
+Sample Output
+ b 98 a ab a98 97 97b 9798
+9
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+
+    static int count;
+
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        SubsequenceASCII(s, "");
+
+        System.out.println();
+        System.out.println(count);
+    }
+
+    public static void SubsequenceASCII(String ques, String ans)
+    {
+        if (ques.length() == 0)
+        {
+            System.out.print(ans + " ");
+            count += 1;
+            return;
+
+        }
+
+        char ch = ques.charAt(0);
+        String roq = ques.substring(1);
+
+        SubsequenceASCII(roq, ans);
+        SubsequenceASCII(roq, ans+ch);
+        SubsequenceASCII(roq, ans + (int)ch);
+    }
+}
+
+
+// Solution Code CB
+
+NOT THERE
+
+
+Recursion-Subsequences
+
+Take as input str, a string. We are concerned with all the possible subsequences of str. E.g.
+
+a. Write a recursive function which returns the count of subsequences for a given string. Print the value returned.
+
+b. Write a recursive function which prints all possible subsequences for a “abcd” has following subsequences “”, “d”, “c”, “cd”, “b”, “bd”, “bc”, “bcd”, “a”, “ad”, “ac”, “acd”, “ab”, “abd”, “abc”, “abcd”.given string (void is the return type for function).
+Note: Use cin for input for C++
+
+Input Format
+Enter a string
+
+Constraints
+None
+
+Output Format
+Print all the subsequences in a space separated manner and isplay the total no. of subsequences.
+
+Sample Input
+abcd
+Sample Output
+ d c cd b bd bc bcd a ad ac acd ab abd abc abcd 
+16
+Explanation
+Print all possible subsequences of the given string.
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+
+    static int count;
+
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next(); 
+
+        Subsequences(s, ""); 
+        System.out.println();
+        System.out.println(count);
+
+        
+    }
+
+    public static void Subsequences(String ques, String ans)
+    {
+        if (ques.length() == 0)
+        {
+            System.out.print(ans + " ");
+            count+=1;
+            return;
+        }
+
+        char ch = ques.charAt(0);
+        String roq = ques.substring(1);
+
+        Subsequences(roq, ans); // Not Added
+        Subsequences(roq, ans + ch); // Added
+    }
+}
+
+
+// Solution Code CB
+
+Approach Discussion
+-We traverse the string recursively. At each instance we have the choice whether or not to include our current character in the subsequence. -We consider both these possibilities by making two recursive calls at each instance. We append our current character into final output string in one of them and leave the other one as is. -In the base case when our input string has been traversed entirely , we simply print the subsequence generated. 
+-The total number of these subsequences is equal to pow(2, len(str) ) , where str is the input string.
+
+import java.util.*;
+
+public class Main {
+    static void printSubsequences(String inp, String out) {
+        if (inp.length() == 0) {
+            System.out.println(out);
+            return;
+        }
+
+        char ch = inp.charAt(0);
+        inp = inp.substring(1);
+        printSubsequences(inp, out);
+        printSubsequences(inp, out + ch);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+
+        printSubsequences(s, "");
+        System.out.println();
+
+        int n = (1 << s.length());
+        System.out.println(n);
+    }
+}
+
+Recursion-Tower of Hanoi
+
+Google Tower of Hanoi.
+
+Using a helper stick (peg), shift all rings from peg A to peg B using peg C. All rings are initally placed in ascending order, smallest being on top.
+
+No bigger ring can be placed over a smaller ring.
+
+a. Write a recursive function which prints the steps required to solve the tower of Hanoi problem for N discs.
+
+b. Write a recursive function which returns number of steps required to solve the tower of Hanoi problem for N discs.
+
+Let T1 be the Source Tower, T2 be the Destination Tower and T3 be the Auxillary Tower.
+
+Input Format
+Enter the number of discs
+
+Constraints
+None
+
+Output Format
+Display the steps required to solve the tower and also print the total number of steps required
+
+Sample Input
+2
+Sample Output
+Move 1th disc from T1 to T3
+Move 2th disc from T1 to T2
+Move 1th disc from T3 to T2
+3
+
+CODE :
+
+// My Solution
+
+
+import java.util.*;
+public class Main {
+
+    static int steps;
+
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        // System.out.println(TOI(n, "src", "dest", "help", 0));
+        TOI(n, "T1", "T2", "T3");
+        System.out.println(steps);
+
+    }
+
+    public static void TOI(int n, String s, String d, String h)
+    {
+        if (n==0)
+            return;
+        
+        TOI(n-1, s, h, d);
+        System.out.println("Move " + n +"th disc from "+ s + " to " + d);
+        steps+=1;
+        TOI(n-1, h, d, s);
+        
+
+        // System.out.println(count);
+
+        // return count;
+    }
+}
+
+// Solution Code CB
+
+NOT THERE
+
+
+// RECURSION 2
+
+Split array ( Recursion )
+
+Take as input N, a number. Take N more inputs and store that in an array.
+
+a. Write a recursive function which counts the number of ways the array could be split in two groups, so that the sum of items in both groups is equal. Each number in the array must belong to one of the two groups. Print the value returned.
+
+b. Write a recursive function which keeps track of ways an array could be split in two groups, so that the sum of items in both groups is equal. Each number in the array must belong to one of the two groups. Return type of function should be void. Print the two groups, each time you find a successful split.
+
+Input Format
+Take as input N, a number. Take N more inputs and store that in an array.
+
+Constraints
+None
+
+Output Format
+Display all the groups in a comma separated manner and display the number of ways the array can be split
+
+Sample Input
+6
+1
+2
+3
+3
+4
+5
+Sample Output
+1 2 3 3 and 4 5 
+1 3 5 and 2 3 4 
+1 3 5 and 2 3 4 
+2 3 4 and 1 3 5 
+2 3 4 and 1 3 5 
+4 5 and 1 2 3 3 
+6
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+
+    static ArrayList<String> list = new ArrayList<String>();
+
+    public static void main(String args[]) {
+        
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+        for (int i = 0 ; i < n; i++)
+            arr[i] = sc.nextInt();
+
+        Arrays.sort(arr);
+
+        System.out.println(SplitArray(arr, 0, 0, 0, "", ""));
+        // System.out.println(list);
+        for (String s : list)
+            System.out.println(s);
+
+
+    }
+
+    public static int SplitArray(int arr[], int vidx, int sum1, int sum2, String res1, String res2)
+    {
+        if (vidx == arr.length)
+        {
+            if (sum1 == sum2)
+            {
+                String res = res1 + "and " + res2;
+                list.add(res);
+                return 1;
+            }
+            return 0;
+        }
+        int count = 0;
+
+        count += SplitArray(arr, vidx+1, sum1+arr[vidx], sum2, res1 + arr[vidx] + " ", res2);
+        count += SplitArray(arr, vidx+1, sum1, sum2 + arr[vidx], res1, res2 + arr[vidx] + " ");
+        return count;
+    }
+}
+
+
+// Solution Code CB
+
+Hacks
+To Solve any Problem related to Recursion All you need to do is Break the Problem into 3 important components which are as follows :-
+
+1.Bigger Problem : The original Problem statement is your bigger problem.
+2.Smaller Problem: In every recursive prblm there exist a prblm statement which you need to achieve in order to fullfill the prblm statement but by considering such a smaller prblm from the bigger prblm is needed which we need to assume that the recursion will work and will give the answer.
+3.Self Work: The amount of work which one should do in order to make the smaller problem your problem.
+
+For e.g.., In order to find the max of any array, three components will be :-
+Bigger Problem : To find the max in whole array viz find max in array from index 0 to n - 1.
+Smaller Problem: Assume that the recursion works and will find the max of array from index 1 to n - 1.
+Self Problem : In order to make your smaller prblm your bigger prblm all you need to do is to compare the ans return by assuming the smaller prblm works with the 0th index element and return the max among both of them.
+
+Similarly Classification acc to the Given prblm :-
+
+Bigger Problem : To Print all of the possible Splits available in an array from indices 0 to n - 1.
+Smaller Problem : Assume the recursion works and will give you ans for indices 1 to n - 1.
+Self Work : In order to make you smaller prblm your problem all you need to work for the 0th index element. Because it could be the part of first part of the split or the part of second part of split.
+Note : In order to keep track of both of the split sum and answer so far we need to take 4 variables :-
+
+ssf1 : It is basically sum so far of 1st split.
+ssf2 : It is sum so far of 2nd split.
+ans1 : It is declared to keep track of numbers which are a part of 1st split.
+ans2 : It is declared to keep track of numbers which are a part of 2nd split.
+cnt : Local variable to return the total number of count.
+Code
+
+ public static int split_array(int[] arr, int vidx,int ssf1,int ssf2,String ans1, String ans2){
+      if(vidx == arr.length){
+
+            //Positive Base Case
+          if(ssf1 == ssf2){
+              System.out.println(ans1+"and "+ans2);
+              return 1;
+          }
+           //Negative Base Case
+          return 0;
+      }
+      int cnt = 0;
+       //If the current element is part of 1st split
+      cnt += split_array(arr,vidx + 1,ssf1 + arr[vidx],ssf2,ans1+arr[vidx]+" ",ans2);
+
+        //If the current element is part of 2nd split
+      cnt += split_array(arr,vidx + 1,ssf1,ssf2 + arr[vidx],ans1,ans2+arr[vidx]+" ");
+      return cnt;
+  }
+
+Boardpath(Count , Print)
+
+Take as input N, a number. N is the size of a snakes and ladder board (without any snakes and ladders). Take as input M, a number. M is the number of faces of the dice.
+
+a. Write a recursive function which returns the count of different ways the board can be traveled using the dice. Print the value returned.
+
+b. Write a recursive function which prints dice-values for all valid paths across the board (void is the return type for function).
+
+Input Format
+Enter a number N (size of the board) and number M(number of the faces of a dice)
+
+Constraints
+None
+
+Output Format
+Display the number of paths and print all the paths in a space separated manner
+
+Sample Input
+3
+3
+Sample Output
+111 12 21 3 
+4
+
+CODE :
+
+// My Solution
+
+import java.util.*;
+public class Main {
+
+    static int count = 0;
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        Boardpath(0, m, n, "");
+        System.out.println();
+        System.out.println(count);
+
+    }
+
+    public static void Boardpath(int start, int m, int n, String ans)
+    {
+        if (start == n)
+        {
+            System.out.print(ans + " ");
+            count+=1;
+            return;
+        }
+
+        if (start > n)
+            return;
+
+        for (int i = 1; i <= m; i++)
+            Boardpath(start+i, m, n, ans + i);
+    }
+}
+
+
+// Solution Code CB
+
+Hacks
+To Solve any Problem related to Recursion All you need to do is Break the Problem into 3 important components which are as follows :-
+
+1.Bigger Problem : The original Problem statement is your bigger problem.
+2.Smaller Problem: In every recursive prblm there exist a prblm statement which you need to achieve in order to fullfill the prblm statement but by considering such a smaller prblm from the bigger prblm is needed which we need to assume that the recursion will work and will give the answer.
+3.Self Work: The amount of work which one should do in order to make the smaller problem your problem.
+
+For e.g.., In order to find the max of any array, three components will be :-
+Bigger Problem : To find the max in whole array viz find max in array from index 0 to n - 1.
+Smaller Problem: Assume that the recursion works and will find the max of array from index 1 to n - 1. Self Problem : In order to make your smaller prblm your bigger prblm all you need to do is to compare the ans return by assuming the smaller prblm works with the 0th index element and return the max among both of them.
+
+Similarly Classification acc to the Given prblm :-
+
+Bigger Problem : To print the all possible Paths from 0 to N.
+Smaller Problem : Assume the recursion works and will give you ans for 1 to N if number on dice is 1, 2 to N if the number on dice is 2 ……. till 6 to N if the number on dice is 6.
+Self Work : In order to make your smaller problem your bigger problem all you need is to add your dice number for each of the six smaller problems as stated above.
+Note : There are 6 Smaller problems because of 6 possibilities of numbers on the dice.
+
+Code
+
+ public static int boardpath(int curr, int end, int faces,String ans){
+
+        if(curr == end){
+
+            System.out.print(ans+" ");
+            return 1;
+        }
+
+        int cnt = 0;
+
+        for(int dice = 1;dice <= faces && dice + curr <= end;dice++){
+           cnt +=  boardpath(curr + dice,end,faces,ans+dice);
+        }
+
+        return cnt;
+    }
+
+
+
+
+
+
+
+
+
+
