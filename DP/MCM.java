@@ -7,7 +7,7 @@ public class MCM {
 
 //		int arr[] = { 4, 2, 3, 5, 1 };
 
-		System.out.println(MCMRecursion(arr, 0, arr.length-1));// ans is 29
+//		System.out.println(MCMRecursion(arr, 0, arr.length-1));// ans is 29
 
 		int arr[] = new int[1000];
 		for (int i = 0; i < arr.length; i++)
